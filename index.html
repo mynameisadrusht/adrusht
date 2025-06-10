@@ -1,119 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>College MUN Registration</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #667eea, #764ba2);
-      color: #333;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ACCA Pass Predictor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Montserrat', Arial, sans-serif;
+    background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%);
+    animation: gradientBG 8s ease-in-out infinite alternate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .container {
-      background-color: white;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      width: 100%;
-      max-width: 550px;
-      animation: fadeIn 0.8s ease-in-out;
-    }
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+  .container {
+    background: rgba(255,255,255,0.10);
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+    border-radius: 25px;
+    padding: 36px 32px 32px 32px;
+    max-width: 370px;
+    width: 95vw;
+    backdrop-filter: blur(7px);
+    border: 1.5px solid rgba(255,255,255,0.21);
+    transition: box-shadow 0.3s;
+  }
 
-    h2 {
-      text-align: center;
-      color: #4a00e0;
-      margin-bottom: 20px;
-    }
+  .container:hover {
+    box-shadow: 0 12px 40px 0 rgba(31,38,135,0.45);
+  }
 
-    form {
-      display: flex;
-      flex-direction: column;
-    }
+  h1 {
+    text-align: center;
+    margin-bottom: 24px;
+    font-weight: 700;
+    font-size: 2rem;
+    color: #fff;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px #0003;
+  }
 
-    label {
-      margin-top: 12px;
-      font-weight: 600;
-    }
+  label {
+    display: block;
+    margin-top: 18px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
 
-    input, select, textarea {
-      padding: 12px;
-      margin-top: 6px;
-      border: 1px solid #bbb;
-      border-radius: 8px;
-      font-size: 15px;
-      transition: 0.3s;
-    }
+  input[type=number], select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 7px;
+    border: 2px solid #e0e0e0;
+    border-radius: 9px;
+    font-size: 1rem;
+    background: rgba(255,255,255,0.7);
+    transition: border 0.2s;
+    outline: none;
+    margin-bottom: 2px;
+  }
 
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: #4a00e0;
-      box-shadow: 0 0 8px rgba(74, 0, 224, 0.2);
-    }
+  input[type=number]:focus, select:focus {
+    border: 2px solid #2575fc;
+    background: #fff;
+  }
 
-    button {
-      margin-top: 24px;
-      padding: 14px;
-      background-color: #4a00e0;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+  .input-error {
+    border: 2px solid #ff4b2b !important;
+    background: #fff0f0 !important;
+  }
 
-    button:hover {
-      background-color: #5f2c82;
-    }
-  </style>
+  .input-success {
+    border: 2px solid #43e97b !important;
+    background: #f0fff7 !important;
+  }
+
+  button {
+    margin-top: 28px;
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1.15rem;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 16px rgba(67,233,123,0.13);
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+
+  button:hover {
+    background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+    box-shadow: 0 8px 24px rgba(37,117,252,0.18);
+  }
+
+  .result {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    min-height: 52px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+    border-radius: 10px;
+    padding: 18px 10px 10px 10px;
+    background: rgba(255,255,255,0.22);
+    box-shadow: 0 2px 8px #0001;
+    color: #fff;
+    position: relative;
+  }
+
+  .result.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .result.low {
+    border-left: 7px solid #ff4b2b;
+    color: #ff4b2b;
+  }
+  .result.medium {
+    border-left: 7px solid #f9d423;
+    color: #f9d423;
+  }
+  .result.high {
+    border-left: 7px solid #43e97b;
+    color: #43e97b;
+  }
+
+  .result-icon {
+    font-size: 2.3rem;
+    display: block;
+    margin-bottom: 5px;
+    animation: pop 0.5s;
+  }
+  @keyframes pop {
+    0% { transform: scale(0.5);}
+    80% { transform: scale(1.15);}
+    100% { transform: scale(1);}
+  }
+
+  @media (max-width: 500px) {
+    .container { padding: 18px 7vw 24px 7vw; }
+    h1 { font-size: 1.2rem; }
+    .result { font-size: 1rem; padding: 10px 2vw; }
+  }
+</style>
 </head>
-
 <body>
   <div class="container">
-    <h2>College MUN Registration</h2>
-    <form id="munForm" action="https://formspree.io/f/mzzgeqyd" method="POST">
-      <label for="name">Full Name:</label>
-      <input type="text" id="name" name="name" required>
+    <h1>ACCA Pass Predictor</h1>
+    <label for="studyHours">Weekly Study Hours</label>
+    <input type="number" id="studyHours" min="0" max="80" placeholder="e.g. 20" />
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
+    <label for="commitment">Commitment Level</label>
+    <select id="commitment">
+      <option value="low">Low</option>
+      <option value="medium" selected>Medium</option>
+      <option value="high">High</option>
+    </select>
 
-      <label for="phone">Phone Number:</label>
-      <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="e.g. 9876543210" required>
+    <label for="confidence">Exam Day Confidence</label>
+    <select id="confidence">
+      <option value="low">Low</option>
+      <option value="medium" selected>Medium</option>
+      <option value="high">High</option>
+    </select>
 
-      <label for="year">Year of Study:</label>
-      <select id="year" name="year" required>
-        <option value="">--Select--</option>
-        <option value="1st Year">1st Year</option>
-        <option value="2nd Year">2nd Year</option>
-        <option value="3rd Year">3rd Year</option>
-        <option value="4th Year">4th Year</option>
-      </select>
+    <button onclick="predictChances()">Predict My Chances</button>
 
-      <label for="committee">Preferred Committee:</label>
-      <input type="text" id="committee" name="committee">
-
-      <label for="message">Why do you want to join MUN?</label>
-      <textarea id="message" name="message" rows="4"></textarea>
-
-      <button type="submit">Register</button>
-    </form>
+    <div class="result" id="result"></div>
   </div>
-</body>
 
+<script>
+  function validateInput(input) {
+    const val = Number(input.value);
+    if (input.value === "" || isNaN(val) || val < 1 || val > 80) {
+      input.classList.remove('input-success');
+      input.classList.add('input-error');
+      return false;
+    } else {
+      input.classList.remove('input-error');
+      input.classList.add('input-success');
+      return true;
+    }
+  }
+
+  function getResultClass(chance) {
+    if (chance < 45) return "low";
+    if (chance < 75) return "medium";
+    return "high";
+  }
+
+  function getResultIcon(chance) {
+    if (chance < 45) return "&#128577;"; // 😟
+    if (chance < 75) return "&#128578;"; // 🙂
+    return "&#128170;"; // 💪
+  }
+
+  function getFeedback(chance) {
+    if (chance < 45) return "You might need to increase your study hours and focus. Don't give up!";
+    if (chance < 75) return "Good effort! Stay consistent and keep building your confidence.";
+    return "Excellent! You're on track to clear your ACCA exams. Keep it up!";
+  }
+
+  function predictChances() {
+    const studyHoursInput = document.getElementById('studyHours');
+    const commitment = document.getElementById('commitment').value;
+    const confidence = document.getElementById('confidence').value;
+    const resultEl = document.getElementById('result');
+
+    // Validate
+    if (!validateInput(studyHoursInput)) {
+      resultEl.className = "result visible low";
+      resultEl.innerHTML = `<span class="result-icon">&#9888;</span> Please enter valid study hours (1-80).`;
+      return;
+    }
+
+    const studyHours = Number(studyHoursInput.value);
+
+    // Prediction logic: more nuanced
+    let chance = 0;
+    // Study hours: 1-80, 0-40%
+    if (studyHours >= 40) chance += 40;
+    else chance += studyHours;
+
+    // Commitment
+    if (commitment === 'low') chance += 10;
+    else if (commitment === 'medium') chance += 22;
+    else if (commitment === 'high') chance += 35;
+
+    // Confidence
+    if (confidence === 'low') chance += 6;
+    else if (confidence === 'medium') chance += 13;
+    else if (confidence === 'high') chance += 22;
+
+    // Add a little randomization for realism
+    chance += Math.floor(Math.random() * 5);
+
+    // Cap at 95%
+    chance = Math.min(95, chance);
+
+    // Result display
+    const resultClass = getResultClass(chance);
+    const icon = getResultIcon(chance);
+    const feedback = getFeedback(chance);
+
+    resultEl.className = `result visible ${resultClass}`;
+    resultEl.innerHTML = `
+      <span class="result-icon">${icon}</span>
+      Estimated Pass Chance: <b>${chance}%</b><br>
+      <small>${feedback}</small>
+    `;
+  }
+
+  // Live validation
+  document.getElementById('studyHours').addEventListener('input', function() {
+    validateInput(this);
+  });
+</script>
+</body>
 </html>
